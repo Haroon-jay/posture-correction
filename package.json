@@ -1,0 +1,13 @@
+{
+    "name": "web",
+    "version": "1.0.0",
+    "description": "<h2 align=\"center\">Website Intelligent Personal Trainer</h2>",
+    "main": "index.js",
+    "scripts": {
+        "dev:websocket": "cd ./backend/detection && uvicorn websocket_server2:app --reload",
+        "install": "pip install -r requirements.txt"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
+}
