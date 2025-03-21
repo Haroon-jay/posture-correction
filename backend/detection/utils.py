@@ -345,7 +345,6 @@ def get_landmark_features(
         ankle_coord = get_landmark_array_2(
             kp_results, dict_features[feature]["ankle"], frame_width, frame_height
         )
-        print("getting foot")
         foot_coord = get_landmark_array_2(
             kp_results, dict_features[feature]["foot"], frame_width, frame_height
         )

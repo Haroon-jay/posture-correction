@@ -308,7 +308,6 @@ async def websocket_endpoint(websocket: WebSocket):
                 frame_width = frame.shape[1]
                 frame_height = frame.shape[0]
                 state, message = None, None
-                print(f"Pose landmarks: {result.pose_landmarks}")
                 if result.pose_landmarks:
                     (state, message) = process.process(
                         result.pose_landmarks.landmark, frame, frame_width, frame_height

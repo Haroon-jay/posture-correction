@@ -154,6 +154,8 @@ class ProcessFrame:
                         > self.thresholds["CNT_FRAME_THRESH"]
                     ] = 0
                     self.state_tracker["prev_state"] = current_state
+                else:
+                    return self.state_tracker, "side_view_required"
 
             # Side view
             else:

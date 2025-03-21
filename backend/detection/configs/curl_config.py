@@ -4,6 +4,7 @@ import numpy as np
 from utils import (
     draw_text,
     find_angle,
+    calculate_angle,
     find_angle_3d,
     get_complete_coords,
     draw_dotted_line,
@@ -31,7 +32,7 @@ def get_curl_state(angles, thresholds, isFront=True):
 
 
 def perform_action_for_state_curl(current_state, state_tracker, angles, thresholds):
-    print(current_state, state_tracker["state_seq"])
+    print(current_state, state_tracker["state_seq"], thresholds)
     if current_state == "s1" and len(state_tracker["state_seq"]) == 2:
         if (
             len(state_tracker["state_seq"]) == 2
@@ -43,10 +44,14 @@ def perform_action_for_state_curl(current_state, state_tracker, angles, threshol
             state_tracker["INCORRECT_POSTURE"] = False
         state_tracker["state_seq"] = []
         state_tracker["INCORRECT_POSTURE"] = False
-    elif abs(angles["back_dist"]) > thresholds["BACK_DIST_THRESH"]:
+    elif abs(angles["hip_vertical_angle"]) > thresholds["HIP_VERT_THRESH"]:
         state_tracker["INCORRECT_POSTURE"] = True
         state_tracker["DISPLAY_TEXT"][0] = True
         print("back not straight")
+    elif abs(angles["ground_upper_arm_angle"]) < thresholds["GROUND_UPPER_ARM_THRESH"]:
+        state_tracker["INCORRECT_POSTURE"] = True
+        state_tracker["DISPLAY_TEXT"][2] = True
+        print("upper arm not stable")
 
 
 def on_front_view_curl(
@@ -101,13 +106,22 @@ def calc_curl_angles(coords):
         coords["hip_coord"],
     )
 
-    back_dist = coords["hip_coord"][0] - coords["shldr_coord"][0]
+    shoulder_projection = [
+        coords["shldr_coord"][0],
+        1,
+    ]
+    ground_upper_arm_angle = int(
+        calculate_angle(
+            coords["elbow_coord"], coords["shldr_coord"], shoulder_projection
+        )
+    )
+
     return {
         "elbow_angle": elbow_angle,
         "hip_vertical_angle": hip_vertical_angle,
         "offset_angle": offset_angle,
         "elbow_angle_3d": elbow_angle_3d,
-        "back_dist": back_dist,
+        "ground_upper_arm_angle": ground_upper_arm_angle,
     }
 
 
@@ -158,7 +172,6 @@ def on_side_view_curl(coords, angles, COLORS, frame, linetype, font):
             )
 
     draw_angle_marker(elbow_coord, angles.get("elbow_angle"), COLORS["white"])
-    draw_angle_marker(shldr_coord, angles.get("shoulder_angle"), COLORS["white"])
     draw_angle_marker(hip_coord, angles.get("hip_vertical_angle"), COLORS["white"])
 
     # ------------------- Connect Body Joints -------------------
@@ -195,7 +208,7 @@ def on_side_view_curl(coords, angles, COLORS, frame, linetype, font):
             )
 
     draw_text(elbow_coord, angles.get("elbow_angle"))
-    draw_text(shldr_coord, angles.get("shoulder_angle"))
+    draw_text(shldr_coord, angles.get("ground_upper_arm_angle"))
     draw_text(hip_coord, angles.get("hip_vertical_angle"))
 
     return True
@@ -211,6 +224,7 @@ curl_config = ExerciseConfig(
     feedback_map={
         0: ("STRAIGHTEN BACK", 215, (0, 153, 255)),
         1: ("BEND FORWARD", 215, (0, 153, 255)),
+        2: ("Keep your upper arms stable! Avoid swinging.", 215, (0, 153, 255)),
     },
     update_state_sequence=update_state_sequence_curl,
     name="bicep-curl",

@@ -21,6 +21,8 @@ def get_thresholds_curl():
         "OFFSET_THRESH": 50,
         "CNT_FRAME_THRESH": 55,
         "BACK_DIST_THRESH": 150,
+        "HIP_VERT_THRESH": 15,
+        "GROUND_UPPER_ARM_THRESH": 155,
     }
     return thresholds
 
