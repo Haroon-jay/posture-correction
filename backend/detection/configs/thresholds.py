@@ -14,11 +14,11 @@ def get_thresholds_pushup():
 def get_thresholds_curl():
     _ANGLE_SHOULDER_ELBOW = {
         "FRONT": {"START": (0, 20), "COMPLETE": 170},
-        "SIDE": {"START": (0, 20), "COMPLETE": 60},
+        "SIDE": {"START": (0, 20), "COMPLETE": 55},
     }
     thresholds = {
         "SHOULDER_ELBOW": _ANGLE_SHOULDER_ELBOW,
-        "OFFSET_THRESH": 50,
+        "OFFSET_THRESH": 60,
         "CNT_FRAME_THRESH": 55,
         "BACK_DIST_THRESH": 150,
         "HIP_VERT_THRESH": 15,

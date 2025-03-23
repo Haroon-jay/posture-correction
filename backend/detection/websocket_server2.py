@@ -312,7 +312,7 @@ async def websocket_endpoint(websocket: WebSocket):
                     (state, message) = process.process(
                         result.pose_landmarks.landmark, frame, frame_width, frame_height
                     )
-                    print(f"State: {state}")
+                    # print(f"State: {state}")
                     print(f"Message: {message}")
                     # exercise_detection.detect(
                     #     mp_results=result, image=frame, timestamp=count

@@ -110,10 +110,13 @@ class ProcessFrame:
             angles = self.config.angles_calc_fn(coords)
 
             offset_angle = angles["offset_angle"]
+
             if offset_angle is None:
                 play_sound = "landmarks_not_visible"
                 return None, play_sound
+            ## write to frame offset angle
 
+            # print("THRESHOLD: ", self.thresholds["OFFSET_THRESH"])
             if offset_angle > self.thresholds["OFFSET_THRESH"]:
                 print("front view")
                 accepted = self.config.on_front_view_fn(
