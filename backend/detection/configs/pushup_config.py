@@ -38,7 +38,7 @@ def perform_action_for_state_pushup(current_state, state_tracker, angles, thresh
 
         if len(state_tracker["state_seq"]) == 2:
             state_tracker["IMPROPER_REP_COUNT"] += 1
-            state_tracker["DISPLAY_TEXT"][0] = True
+            state_tracker["DISPLAY_TEXT"][1] = True
             state_tracker["state_seq"] = []
             state_tracker["INCORRECT_POSTURE"] = False
 
@@ -236,7 +236,7 @@ pushup_config = ExerciseConfig(
     view_fns={"front": on_front_view_pushup, "side": on_side_view_pushup},
     feedback_map={
         0: ("KEEP GOING", 215, (0, 153, 255)),
-        1: ("INCOMPLETE PUSHUP", 215, (0, 153, 255)),
+        1: ("Make sure to go all the way down for a full push-up.", 215, (0, 153, 255)),
     },
     update_state_sequence=update_state_sequence_pushup,
     name="push-up",

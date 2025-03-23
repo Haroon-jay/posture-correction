@@ -1,6 +1,6 @@
 def get_thresholds_pushup():
     ELBOW_ANGLE = {
-        "SIDE": {"START": (0, 20), "TRANS": (40, 50), "COMPLETE": 60},
+        "SIDE": {"START": (0, 20), "TRANS": (30, 40), "COMPLETE": 45},
         "FRONT": {"START": (0, 15), "TRANS": (20, 40), "COMPLETE": 50},
     }
     thresholds = {
